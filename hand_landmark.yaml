@@ -1,0 +1,19 @@
+# path: '../../../ziyi/Ship/Data/'
+path: '../Desktop/GitHub/Hand_Landmark_Detection/data/'
+train: 'train/'
+val: 'test/'
+
+
+# Keypoints
+kpt_shape: [21, 3]  # number of keypoints, number of dims (2 for x,y or 3 for x,y,visible)
+
+# flip_idx -> needed when the points are symmetric
+# For example -> if we assume five keypoints of facial landmark:
+# [left eye, right eye, nose, left mouth, right mouth]
+# and original index is [0, 1, 2, 3, 4]
+# => then flip_idx is [1, 0, 2, 4, 3] (just exchange the left-right index
+# flip_idx: [0, 2, 1, 4, 3, 6, 5, 8, 7, 10, 9, 12, 11, 14, 13, 16, 15]
+
+# Classes dictionary
+names:
+  0: hand
