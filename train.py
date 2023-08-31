@@ -1,14 +1,16 @@
 from ultralytics import YOLO
 
 # Load a pretrained model
-model = YOLO('runs/pose/yolo_pose_100e/weights/best.pt')
+model = YOLO('yolov8n-pose.pt')
 
 # Train the model
 results = model.train(
     data='hand_landmark.yaml',
-    epochs=100,
+    epochs=200,
     imgsz=1280,
     batch=16,
-    name='pose_2nd_100'
+    name='pose_aug_200',
+    flipud=0.5,
+    fliplr=0.5
 )
 
