@@ -3,6 +3,9 @@ import cv2
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
+import os
+from pathlib import Path
+import random
 
 # define the pairs of keypoints need to connect together
 skeleton = [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [6, 7], [7, 8],
@@ -49,6 +52,7 @@ def predict(model, image_path, saved_path):
 
         # get the coords of the keypoints
         keypoints = r.keypoints.xy.numpy()
+        # keypoints = r.keypoints.xy.cpu().numpy()
 
         W = image.shape[0]
         thickness = W // 120
@@ -59,6 +63,21 @@ def predict(model, image_path, saved_path):
         mpimg.imsave(saved_path, kpt_image)
 
 
-# test
+""" ---------------- Make predictions to all the test file ----------------  """
+
+# create a folder to store the result image
+save_folder = "runs/pose/rand_pred_50"
+os.makedirs(save_folder, exist_ok = True)
+
+# load the model
 model = YOLO('runs/pose/pose_2nd_100/weights/best.pt')
-predict(model, "Data/image/CSK6-003-004_000131.jpg", "test.jpg")
+
+# loop all the test file and make prediction
+# get list of files
+images_path = Path("data/test/images/")
+image_path_list = list(images_path.glob("*.jpg"))
+random.shuffle(image_path_list)
+
+for file in image_path_list[:50]:
+    saved_path = save_folder + str(file)[16:]
+    predict(model, file, saved_path)
